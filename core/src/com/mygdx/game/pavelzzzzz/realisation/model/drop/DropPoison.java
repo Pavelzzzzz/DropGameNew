@@ -1,7 +1,7 @@
-package com.mygdx.game.pavelzzzzz.version3.model.drop;
+package com.mygdx.game.pavelzzzzz.realisation.model.drop;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.pavelzzzzz.version3.model.DropsAction;
+import com.mygdx.game.pavelzzzzz.realisation.model.DropsAction;
 
 /**
  * Created by Pavel on 05.12.16.

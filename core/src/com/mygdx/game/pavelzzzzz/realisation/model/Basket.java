@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz.version3.model;
+package com.mygdx.game.pavelzzzzz.realisation.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;

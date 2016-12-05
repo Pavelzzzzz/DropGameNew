@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz.version3;
+package com.mygdx.game.pavelzzzzz.realisation;
 
 import com.badlogic.gdx.utils.TimeUtils;
 

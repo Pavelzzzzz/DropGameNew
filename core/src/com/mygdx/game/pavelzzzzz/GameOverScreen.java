@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.mygdx.game.pavelzzzzz.realisation.GameScreen3;
 
 /**
  * Created by Pavel on 30.11.16.
@@ -19,7 +20,7 @@ public class GameOverScreen implements Screen {
 
     final Drop game;
 
-    int resultArray[];
+    private int resultArray[];
     private Vector3 touchPoint;
     boolean stateClick;
 
@@ -28,7 +29,7 @@ public class GameOverScreen implements Screen {
 
     private BitmapFont font1;
 
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
     public GameOverScreen(final Drop gam, int inputResultArray[]){
         game = gam;
@@ -106,7 +107,7 @@ public class GameOverScreen implements Screen {
         if (handlerForClickingTheButton()) {
             if (buttonPlay.contains(touchPoint.x, touchPoint.y)){
                 this.dispose();
-                game.setScreen(new com.mygdx.game.pavelzzzzz.version3.GameScreen3(game, true, true));
+                game.setScreen(new GameScreen3(game, true, true));
             }
             if (buttonArrow.contains(touchPoint.x, touchPoint.y)){
                 this.dispose();

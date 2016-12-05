@@ -28,7 +28,7 @@ public class ResultsScreen implements Screen {
     private BitmapFont font1;
     private BitmapFont font2;
 
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
     public ResultsScreen(Drop game) {
         this.game = game;

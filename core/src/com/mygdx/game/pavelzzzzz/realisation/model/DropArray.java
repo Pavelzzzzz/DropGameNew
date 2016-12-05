@@ -1,8 +1,8 @@
-package com.mygdx.game.pavelzzzzz.version3.model;
+package com.mygdx.game.pavelzzzzz.realisation.model;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.pavelzzzzz.version3.model.drop.DropSimple;
+import com.mygdx.game.pavelzzzzz.realisation.model.drop.DropSimple;
 
 /**
  * Created by Pavel on 26.11.16.

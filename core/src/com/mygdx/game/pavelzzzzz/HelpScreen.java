@@ -26,7 +26,7 @@ public class HelpScreen  implements Screen {
     private BitmapFont font1;
     private BitmapFont font2;
 
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
     private Texture dropSimple;
     private Texture dropBasket;
@@ -136,6 +136,11 @@ public class HelpScreen  implements Screen {
     @Override
     public void dispose() {
         buttonArrow.dispose();
+        dropSimple.dispose();
+        dropBasket.dispose();
+        dropNumber.dispose();
+        dropSpeed.dispose();
+        dropPoison.dispose();
         font1.dispose();
         font2.dispose();
     }

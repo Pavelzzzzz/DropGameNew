@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz.version3;
+package com.mygdx.game.pavelzzzzz.realisation;
 
 /**
  * Created by Pavel on 26.11.16.
@@ -21,10 +21,9 @@ import com.mygdx.game.pavelzzzzz.ButtonWithTwoPosition;
 import com.mygdx.game.pavelzzzzz.Drop;
 import com.mygdx.game.pavelzzzzz.GameOverScreen;
 import com.mygdx.game.pavelzzzzz.MainMenuScreen2;
-import com.mygdx.game.pavelzzzzz.version3.model.Basket;
-import com.mygdx.game.pavelzzzzz.version3.model.DropArray;
-import com.mygdx.game.pavelzzzzz.version3.model.DropCreator;
-import com.mygdx.game.pavelzzzzz.version3.model.DropsAction;
+import com.mygdx.game.pavelzzzzz.realisation.model.drop.DropPoison;
+import com.mygdx.game.pavelzzzzz.realisation.model.Basket;
+import com.mygdx.game.pavelzzzzz.realisation.model.DropsAction;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,8 +52,8 @@ public class GameScreen3 implements Screen {
 
     private Basket basket;
     private DropsAction dropsAction;
-    private DropArray dropArray;
-    private DropCreator creator;
+    private com.mygdx.game.pavelzzzzz.realisation.model.DropArray dropArray;
+    private com.mygdx.game.pavelzzzzz.realisation.model.DropCreator creator;
     private DropDeclining dropDeclining;
     private DropsCreateSpeed dropsCreateSpeed;
 
@@ -95,12 +94,12 @@ public class GameScreen3 implements Screen {
 
         basket = new Basket();
 
-        dropArray = new DropArray();
+        dropArray = new com.mygdx.game.pavelzzzzz.realisation.model.DropArray();
         dropDeclining = new DropDeclining();
         dropsCreateSpeed = new DropsCreateSpeed();
         dropsAction = new DropsAction(this, basket, dropDeclining, dropsCreateSpeed);
 
-        creator = new DropCreator(dropsAction);
+        creator = new com.mygdx.game.pavelzzzzz.realisation.model.DropCreator(dropsAction);
 
         final String FONT_CHARS = "abcdefghijklmnopqrstuvwxyz" +
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
@@ -216,7 +215,7 @@ public class GameScreen3 implements Screen {
             for (int i = 0; i < dropArray.size(); i++){
                 dropArray.setY(i, (dropArray.getRectangle(i).y - dropDeclining.getDropSpeed() * Gdx.graphics.getDeltaTime()));
                 if (dropArray.getRectangle(i).y + 64 < 0){
-                    if (!(dropArray.getType(i) instanceof com.mygdx.game.pavelzzzzz.version3.model.drop.DropPoison)){
+                    if (!(dropArray.getType(i) instanceof DropPoison)){
                         life--;
                     }
                     if (life < 1){

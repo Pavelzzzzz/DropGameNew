@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.pavelzzzzz.realisation.GameScreen3;
 
 /**
  * Created by Pavel on 29.11.16.
@@ -85,7 +86,7 @@ public class MainMenuScreen2 implements Screen {
         if (handlerForClickingTheButton()) {
             if (buttonPlay.contains(touchPoint.x, touchPoint.y)){
                 this.dispose();
-                game.setScreen(new com.mygdx.game.pavelzzzzz.version3.GameScreen3(game, playRainMusic, playDropSound));
+                game.setScreen(new GameScreen3(game, playRainMusic, playDropSound));
             }
 
             if (buttonResults.contains(touchPoint.x, touchPoint.y)){

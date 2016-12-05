@@ -1,8 +1,4 @@
-package com.mygdx.game.pavelzzzzz.version3.model;
-
-import com.mygdx.game.pavelzzzzz.version3.DropDeclining;
-import com.mygdx.game.pavelzzzzz.version3.DropsCreateSpeed;
-import com.mygdx.game.pavelzzzzz.version3.GameScreen3;
+package com.mygdx.game.pavelzzzzz.realisation.model;
 
 /**
  * Created by Pavel on 27.11.16.
@@ -10,12 +6,12 @@ import com.mygdx.game.pavelzzzzz.version3.GameScreen3;
 
 public class DropsAction {
 
-    DropDeclining dropDeclining;
+    com.mygdx.game.pavelzzzzz.realisation.DropDeclining dropDeclining;
     Basket basket;
-    DropsCreateSpeed dropsCreateSpeed;
-    GameScreen3 gameScreen3;
+    com.mygdx.game.pavelzzzzz.realisation.DropsCreateSpeed dropsCreateSpeed;
+    com.mygdx.game.pavelzzzzz.realisation.GameScreen3 gameScreen3;
 
-    public DropsAction(GameScreen3 inputGameScreen3, Basket inputbasket, DropDeclining inputDropDeclining, DropsCreateSpeed inputDropsCreateSpeed){
+    public DropsAction(com.mygdx.game.pavelzzzzz.realisation.GameScreen3 inputGameScreen3, Basket inputbasket, com.mygdx.game.pavelzzzzz.realisation.DropDeclining inputDropDeclining, com.mygdx.game.pavelzzzzz.realisation.DropsCreateSpeed inputDropsCreateSpeed){
         gameScreen3 = inputGameScreen3;
         basket = inputbasket;
         dropDeclining = inputDropDeclining;
