@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz;
+package com.mygdx.game.pavelzzzzz.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.pavelzzzzz.*;
 
 /**
  * Created by Pavel on 05.12.16.
@@ -18,7 +19,7 @@ public class HelpScreen  implements Screen {
 
     final Drop game;
 
-    private Button buttonArrow;
+    private com.mygdx.game.pavelzzzzz.buttons.Button buttonArrow;
 
     private Vector3 touchPoint;
     private boolean stateClick;
@@ -34,12 +35,18 @@ public class HelpScreen  implements Screen {
     private Texture dropSpeed;
     private Texture dropPoison;
 
-    public HelpScreen(Drop game) {
+    public HelpScreen(Drop game, Screen previousScreen) {
+
         this.game = game;
+        if (previousScreen != null) {
+            previousScreen.dispose();
+            System.out.print("dispose\n");
+        }
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         touchPoint = new Vector3();
-        buttonArrow = new Button("button/arrow.png", 10, 10, 64, 64);
+        buttonArrow = new com.mygdx.game.pavelzzzzz.buttons.Button("button/arrow.png", 10, 10, 64, 64);
 
         dropSimple = new Texture("dropBlue.png");
         dropBasket = new Texture("dropTransparentGreen.png");
@@ -59,6 +66,7 @@ public class HelpScreen  implements Screen {
         parameter.size = 64;
         font2 = generator.generateFont(parameter);
         generator.dispose();
+        System.out.print("HelpScreen created\n");
     }
 
     @Override
@@ -90,12 +98,12 @@ public class HelpScreen  implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         font2.draw(game.batch, "Help screen", 250, 475);
-        font1.draw(game.batch, "Your main goal is to catch as many drop as you can.", 50, 400);
+        font1.draw(game.batch, "Your main goal is to catch as many drops as you can.", 50, 400);
         font1.draw(game.batch, "Types of drops:", 80, 375);
         game.batch.draw(dropSimple, 110, 275);
         font1.draw(game.batch, " ->  Score +1", 180, 325);
         game.batch.draw(dropNumber, 110, 205);
-        font1.draw(game.batch, " ->  Score +25; creation's speed /2", 180, 255);
+        font1.draw(game.batch, " ->  Score +25; creation speed /2", 180, 255);
         game.batch.draw(dropSpeed, 110, 135);
         font1.draw(game.batch, " ->  Score +25; decline speed *2", 180, 185);
         game.batch.draw(dropBasket, 110, 65);
@@ -108,8 +116,7 @@ public class HelpScreen  implements Screen {
 
         if (handlerForClickingTheButton()) {
             if (buttonArrow.contains(touchPoint.x, touchPoint.y)){
-                this.dispose();
-                game.setScreen(new MainMenuScreen2(game));
+                game.setScreen(new MainMenuScreen2(game, this));
             }}
     }
 

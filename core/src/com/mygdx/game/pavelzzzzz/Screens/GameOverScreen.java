@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz;
+package com.mygdx.game.pavelzzzzz.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.mygdx.game.pavelzzzzz.Drop;
+import com.mygdx.game.pavelzzzzz.Score;
 import com.mygdx.game.pavelzzzzz.realisation.GameScreen3;
 
 /**
@@ -24,15 +26,19 @@ public class GameOverScreen implements Screen {
     private Vector3 touchPoint;
     boolean stateClick;
 
-    private Button buttonPlay;
-    private Button buttonArrow;
+    private com.mygdx.game.pavelzzzzz.buttons.Button buttonPlay;
+    private com.mygdx.game.pavelzzzzz.buttons.Button buttonArrow;
 
     private BitmapFont font1;
 
     private OrthographicCamera camera;
 
-    public GameOverScreen(final Drop gam, int inputResultArray[]){
+    public GameOverScreen(final Drop gam, Screen previousScreen, int inputResultArray[]){
         game = gam;
+        if (previousScreen != null) {
+            previousScreen.dispose();
+            System.out.print("dispose\n");
+        }
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -49,8 +55,8 @@ public class GameOverScreen implements Screen {
         generator.dispose();
 
         resultArray = inputResultArray;
-        buttonPlay = new Button("button/buttonPlayAgain.png",240, 350, 320, 100);
-        buttonArrow = new Button("button/arrow.png", 10, 10, 64, 64);
+        buttonPlay = new com.mygdx.game.pavelzzzzz.buttons.Button("button/buttonPlayAgain.png",240, 350, 320, 100);
+        buttonArrow = new com.mygdx.game.pavelzzzzz.buttons.Button("button/arrow.png", 10, 10, 64, 64);
         touchPoint = new Vector3();
 
         Score score = new Score();
@@ -61,9 +67,10 @@ public class GameOverScreen implements Screen {
         sb.append(Integer.toString(inputResultArray[2]));
         sb.append("      ");
         sb.append(Integer.toString(inputResultArray[3]));
-        sb.append('\n');
+        sb.append("\n");
         score.setScore(new String[]{Integer.toString(inputResultArray[1]), sb.toString()});
         score.writeToFile();
+        System.out.print("GameOverScreen created\n");
     }
 
 
@@ -95,10 +102,10 @@ public class GameOverScreen implements Screen {
 
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        font1.draw(game.batch, "Drops Collected: " + resultArray[0], 100, 300);
+        font1.draw(game.batch, "Collected drops: " + resultArray[0], 100, 300);
         font1.draw(game.batch, "Score: " + resultArray[1], 100, 250);
-        font1.draw(game.batch, "Create time: " + resultArray[2], 100, 200);
-        font1.draw(game.batch, "Speed: " + resultArray[3], 100, 150);
+        font1.draw(game.batch, "Creation time: " + resultArray[2], 100, 200);
+        font1.draw(game.batch, "Decline speed: " + resultArray[3], 100, 150);
         game.batch.draw(buttonPlay.getButtonImage(), buttonPlay.getArrayData()[0], buttonPlay.getArrayData()[1]);
         game.batch.draw(buttonArrow.getButtonImage(), buttonArrow.getArrayData()[0], buttonArrow.getArrayData()[1],
                 buttonArrow.getArrayData()[2], buttonArrow.getArrayData()[3]);
@@ -106,12 +113,10 @@ public class GameOverScreen implements Screen {
 
         if (handlerForClickingTheButton()) {
             if (buttonPlay.contains(touchPoint.x, touchPoint.y)){
-                this.dispose();
-                game.setScreen(new GameScreen3(game, true, true));
+                game.setScreen(new GameScreen3(game, this, true, true));
             }
             if (buttonArrow.contains(touchPoint.x, touchPoint.y)){
-                this.dispose();
-                game.setScreen(new MainMenuScreen2(game));
+                game.setScreen(new MainMenuScreen2(game, this));
             }}
     }
 

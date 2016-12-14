@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz;
+package com.mygdx.game.pavelzzzzz.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.pavelzzzzz.*;
 
 
 /**
@@ -18,7 +19,7 @@ public class ResultsScreen implements Screen {
 
     final Drop game;
 
-    private Button buttonArrow;
+    private com.mygdx.game.pavelzzzzz.buttons.Button buttonArrow;
 
     private Vector3 touchPoint;
     private boolean stateClick;
@@ -30,12 +31,16 @@ public class ResultsScreen implements Screen {
 
     private OrthographicCamera camera;
 
-    public ResultsScreen(Drop game) {
+    public ResultsScreen(Drop game, Screen previousScreen) {
         this.game = game;
+        if (previousScreen != null) {
+            previousScreen.dispose();
+            System.out.print("dispose\n");
+        }
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         touchPoint = new Vector3();
-        buttonArrow = new Button("button/arrow.png", 10, 10, 64, 64);
+        buttonArrow = new com.mygdx.game.pavelzzzzz.buttons.Button("button/arrow.png", 10, 10, 64, 64);
         Score score = new Score();
         results = score.getString();
 
@@ -51,6 +56,7 @@ public class ResultsScreen implements Screen {
         parameter.size = 64;
         font2 = generator.generateFont(parameter);
         generator.dispose();
+        System.out.print("ResultsScreen created\n");
     }
 
     @Override
@@ -82,6 +88,8 @@ public class ResultsScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         font2.draw(game.batch, "Results", 320, 460);
+        //String s1 = String.format("%10s %10s %10s %10s", "Score", "Drop", "Creation time", "Speed");
+        //font1.draw(game.batch, s1, 150, 380);
         font1.draw(game.batch, "Score  Drop  Speed  Creation time", 150, 380);
         font1.draw(game.batch, results, 150, 330);
         game.batch.draw(buttonArrow.getButtonImage(), buttonArrow.getArrayData()[0], buttonArrow.getArrayData()[1],
@@ -90,8 +98,7 @@ public class ResultsScreen implements Screen {
 
         if (handlerForClickingTheButton()) {
             if (buttonArrow.contains(touchPoint.x, touchPoint.y)){
-                this.dispose();
-                game.setScreen(new MainMenuScreen2(game));
+                game.setScreen(new MainMenuScreen2(game, this));
             }}
     }
 

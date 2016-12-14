@@ -16,11 +16,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.pavelzzzzz.Button;
-import com.mygdx.game.pavelzzzzz.ButtonWithTwoPosition;
+import com.mygdx.game.pavelzzzzz.buttons.Button;
+import com.mygdx.game.pavelzzzzz.buttons.ButtonWithTwoPosition;
 import com.mygdx.game.pavelzzzzz.Drop;
-import com.mygdx.game.pavelzzzzz.GameOverScreen;
-import com.mygdx.game.pavelzzzzz.MainMenuScreen2;
+import com.mygdx.game.pavelzzzzz.Screens.GameOverScreen;
+import com.mygdx.game.pavelzzzzz.Screens.MainMenuScreen2;
 import com.mygdx.game.pavelzzzzz.realisation.model.drop.DropPoison;
 import com.mygdx.game.pavelzzzzz.realisation.model.Basket;
 import com.mygdx.game.pavelzzzzz.realisation.model.DropsAction;
@@ -63,8 +63,12 @@ public class GameScreen3 implements Screen {
 
     private BitmapFont font1;
 
-    public GameScreen3 (final Drop gam, boolean inputPlayRainMusic, boolean inputPlayDropSound) {
+    public GameScreen3 (final Drop gam, Screen previousScreen, boolean inputPlayRainMusic, boolean inputPlayDropSound) {
         this.game = gam;
+        if (previousScreen != null) {
+            previousScreen.dispose();
+            System.out.print("dispose\n");
+        }
         life = 5;
 
         camera = new OrthographicCamera();
@@ -111,6 +115,7 @@ public class GameScreen3 implements Screen {
         parameter.color = Color.GOLD;
         font1 = generator.generateFont(parameter);
         generator.dispose();
+        System.out.print("GameScreen created\n");
     }
 
     @Override
@@ -150,10 +155,10 @@ public class GameScreen3 implements Screen {
                     dropArray.getRectangle(i).x,
                     dropArray.getRectangle(i).y);
         }
-        font1.draw(game.batch, "Drops Collected: " + dropsGathered, 10, 470);
+        font1.draw(game.batch, "Collected drops: " + dropsGathered, 10, 470);
         font1.draw(game.batch, "Score: " + dropsScore, 10, 440);
-        font1.draw(game.batch, "Create time: " + dropsCreateSpeed.getCreateSpeedTime()/100000, 10, 410);
-        font1.draw(game.batch, "Speed: " + dropDeclining.getDropSpeed(), 10, 380);
+        font1.draw(game.batch, "Creation time: " + dropsCreateSpeed.getCreateSpeedTime()/100000, 10, 410);
+        font1.draw(game.batch, "Decline speed: " + dropDeclining.getDropSpeed(), 10, 380);
         font1.draw(game.batch, "Life: " + life, 10, 350);
         game.batch.draw(basket.getImage(), basket.getRectangleX(), basket.getRectangleY(), basket.rectangleWidth(), basket.rectangleHeight());
         game.batch.draw(buttonPause.getButtonImage(), buttonPause.getArrayData()[0], buttonPause.getArrayData()[1],
@@ -183,12 +188,11 @@ public class GameScreen3 implements Screen {
                     }
                 }
                 if (buttonArrow.contains(touchPoint.x, touchPoint.y)){
-                    this.dispose();
-                    game.setScreen(new MainMenuScreen2(game));
+                    game.setScreen(new MainMenuScreen2(game, this));
                 }
             }
         }
-        if (pauseOn ==false){
+        if (pauseOn == false){
             if (Gdx.input.isTouched()){
                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 camera.unproject(touchPos);
@@ -218,11 +222,6 @@ public class GameScreen3 implements Screen {
                     if (!(dropArray.getType(i) instanceof DropPoison)){
                         life--;
                     }
-                    if (life < 1){
-                        this.dispose();
-                        long speed =new Long(dropsCreateSpeed.getCreateSpeedTime()/100000);
-                        game.setScreen(new GameOverScreen(game, new int []{(int)dropsGathered, (int)dropsScore, (int)speed,  dropDeclining.getDropSpeed()}));
-                    }
                     delArray.add(i);
                 }
                 if (basket.overlaps(dropArray.getRectangle(i))){
@@ -233,6 +232,11 @@ public class GameScreen3 implements Screen {
                     }
                     dropArray.getType(i).action();
                     delArray.add(i);
+                }
+				if (life < 0){
+                    long speed =new Long(dropsCreateSpeed.getCreateSpeedTime()/100000);
+                    game.setScreen(new GameOverScreen(game, this, new int []{(int)dropsGathered, (int)dropsScore, (int)speed,  dropDeclining.getDropSpeed()}));
+                    return;
                 }
             }
             Iterator<Integer> iter = delArray.iterator();
@@ -282,6 +286,5 @@ public class GameScreen3 implements Screen {
         buttonSound.dispose();
         buttonArrow.dispose();
         creator.dispose();
-        font1.dispose();
     }
 }

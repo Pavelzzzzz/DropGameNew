@@ -40,7 +40,7 @@ public class Score {
 
     private void arrayShit(String[] el, int ind){
         if (ind < 9){
-            arrayShit(scoreArray[ind+1], ind+1);
+            arrayShit(scoreArray[ind], ind+1);
             scoreArray[ind] = el;
         }
     }
@@ -52,8 +52,9 @@ public class Score {
                 arrayShit(scoreArray[ind], ind+1);
                 scoreArray[ind] = score;
                 doing = false;
+                count++;
         }}
-        if (doing){
+        if (doing && (count < 10)){
             scoreArray[count][0] = score[0];
             scoreArray[count][1] = score[1];
             count++;

@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz;
+package com.mygdx.game.pavelzzzzz.buttons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;

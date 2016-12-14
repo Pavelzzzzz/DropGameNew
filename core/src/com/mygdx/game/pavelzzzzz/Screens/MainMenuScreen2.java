@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz;
+package com.mygdx.game.pavelzzzzz.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.pavelzzzzz.Drop;
+import com.mygdx.game.pavelzzzzz.buttons.Button;
 import com.mygdx.game.pavelzzzzz.realisation.GameScreen3;
 
 /**
@@ -20,27 +22,30 @@ public class MainMenuScreen2 implements Screen {
 
     private OrthographicCamera camera;
 
-    private Button buttonPlay;
-    private Button buttonResults;
-    private Button buttonHelp;
+    private com.mygdx.game.pavelzzzzz.buttons.Button buttonPlay;
+    private com.mygdx.game.pavelzzzzz.buttons.Button buttonResults;
+    private com.mygdx.game.pavelzzzzz.buttons.Button buttonHelp;
     private Vector3 touchPoint;
     private boolean playRainMusic;
     private boolean playDropSound;
-    private ButtonWithTwoPosition buttonSound;
-    private ButtonWithTwoPosition buttonMusic;
+    private com.mygdx.game.pavelzzzzz.buttons.ButtonWithTwoPosition buttonSound;
+    private com.mygdx.game.pavelzzzzz.buttons.ButtonWithTwoPosition buttonMusic;
     boolean stateClick;
     private BitmapFont font1;
 
-    public MainMenuScreen2 (final Drop gam){
+    public MainMenuScreen2 (final Drop gam, Screen previousScreen){
         game = gam;
-
+        if (previousScreen != null) {
+            previousScreen.dispose();
+            System.out.print("dispose\n");
+        }
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        buttonPlay = new Button("button/buttonPlay.png", 240, 280, 320, 100);
-        buttonResults = new Button("button/buttonResults.png", 240, 180, 320, 100);
+        buttonPlay = new com.mygdx.game.pavelzzzzz.buttons.Button("button/buttonPlay.png", 240, 280, 320, 100);
+        buttonResults = new com.mygdx.game.pavelzzzzz.buttons.Button("button/buttonResults.png", 240, 180, 320, 100);
         buttonHelp = new Button("button/buttonHelp.png", 240, 80, 320, 100);
-        buttonSound = new ButtonWithTwoPosition("button/buttonSoundOn.png", "button/buttonSoundOff.png", 10, 10, 64, 64);
-        buttonMusic = new ButtonWithTwoPosition("button/buttonMusicOn.png", "button/buttonMusicOff.png", 10, 94, 64, 64);
+        buttonSound = new com.mygdx.game.pavelzzzzz.buttons.ButtonWithTwoPosition("button/buttonSoundOn.png", "button/buttonSoundOff.png", 10, 10, 64, 64);
+        buttonMusic = new com.mygdx.game.pavelzzzzz.buttons.ButtonWithTwoPosition("button/buttonMusicOn.png", "button/buttonMusicOff.png", 10, 94, 64, 64);
         touchPoint = new Vector3();
         stateClick = false;
         playRainMusic = true;
@@ -56,6 +61,7 @@ public class MainMenuScreen2 implements Screen {
         parameter.color = Color.GOLD;
         font1 = generator.generateFont(parameter);
         generator.dispose();
+        System.out.print("MainMenuScreen2 created\n");
     }
 
 
@@ -85,18 +91,15 @@ public class MainMenuScreen2 implements Screen {
 
         if (handlerForClickingTheButton()) {
             if (buttonPlay.contains(touchPoint.x, touchPoint.y)){
-                this.dispose();
-                game.setScreen(new GameScreen3(game, playRainMusic, playDropSound));
+                game.setScreen(new GameScreen3(game, this, playRainMusic, playDropSound));
             }
 
             if (buttonResults.contains(touchPoint.x, touchPoint.y)){
-                this.dispose();
-                game.setScreen(new ResultsScreen(game));
+                game.setScreen(new ResultsScreen(game, this));
             }
 
             if (buttonHelp.contains(touchPoint.x, touchPoint.y)){
-                this.dispose();
-                game.setScreen(new HelpScreen(game));
+                game.setScreen(new HelpScreen(game, this));
             }
 
             if (buttonSound.contains(touchPoint.x, touchPoint.y)){
