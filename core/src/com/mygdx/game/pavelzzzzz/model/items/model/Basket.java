@@ -1,14 +1,15 @@
-package com.mygdx.game.pavelzzzzz.realisation.model;
+package com.mygdx.game.pavelzzzzz.model.items.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.pavelzzzzz.model.draw.DrawingObject;
 
 /**
  * Created by Pavel on 27.11.16.
  */
 
-public class Basket {
+public class Basket implements DrawingObject {
 
     private Texture bucketImage;
     private Texture basinImage;
@@ -44,16 +45,28 @@ public class Basket {
             bucket = true;
         }
     }
-
+    @Override
     public Texture getImage(){
         return currentImage;
     }
 
-    public float rectangleWidth (){
+    @Override
+    public float getX() {
+        return rectangle.x;
+    }
+
+    @Override
+    public float getY() {
+        return rectangle.y;
+    }
+
+    @Override
+    public float getWidth() {
         return rectangle.width;
     }
 
-    public float rectangleHeight (){
+    @Override
+    public float getHeight() {
         return rectangle.height;
     }
 
@@ -61,16 +74,8 @@ public class Basket {
         rectangle.x = x;
     }
 
-    public float getRectangleX(){
-        return rectangle.x;
-    }
-
     public void setRectangleY(float y){
         rectangle.y =y ;
-    }
-
-    public float getRectangleY(){
-        return rectangle.y;
     }
 
     public boolean overlaps(Rectangle x ){

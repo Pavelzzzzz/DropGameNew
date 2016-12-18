@@ -1,13 +1,13 @@
-package com.mygdx.game.pavelzzzzz.realisation.model;
+package com.mygdx.game.pavelzzzzz.model.items.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-
-import com.mygdx.game.pavelzzzzz.realisation.model.drop.DropPoison;
-import com.mygdx.game.pavelzzzzz.realisation.model.drop.DropSimple;
-import com.mygdx.game.pavelzzzzz.realisation.model.drop.DropBasket;
-import com.mygdx.game.pavelzzzzz.realisation.model.drop.DropNumber;
+import com.mygdx.game.pavelzzzzz.model.items.model.drop.DropBasket;
+import com.mygdx.game.pavelzzzzz.model.items.model.drop.DropNumber;
+import com.mygdx.game.pavelzzzzz.model.items.model.drop.DropPoison;
+import com.mygdx.game.pavelzzzzz.model.items.model.drop.DropSimple;
+import com.mygdx.game.pavelzzzzz.model.items.model.drop.DropSpeed;
 
 
 /**
@@ -22,7 +22,7 @@ public class DropCreator {
 
     public DropCreator (DropsAction dropsAction){
         array = new DropSimple[]{new DropSimple(1, new Texture("dropBlue.png"), dropsAction),
-                new com.mygdx.game.pavelzzzzz.realisation.model.drop.DropSpeed(25, new Texture("dropPurple.png"), dropsAction),
+                new DropSpeed(25, new Texture("dropPurple.png"), dropsAction),
                 new DropBasket(10, new Texture("dropTransparentGreen.png"), dropsAction),
                 new DropNumber(25, new Texture("dropOrange.png"), dropsAction),
                 new DropPoison(0, new Texture("dropLightGreenPoison.png"), dropsAction)};

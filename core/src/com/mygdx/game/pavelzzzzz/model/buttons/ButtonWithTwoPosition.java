@@ -1,13 +1,15 @@
-package com.mygdx.game.pavelzzzzz.buttons;
+package com.mygdx.game.pavelzzzzz.model.buttons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+
+import com.mygdx.game.pavelzzzzz.model.draw.DrawingObject;
 
 /**
  * Created by Pavel on 04.12.16.
  */
 
-public class ButtonWithTwoPosition {
+public class ButtonWithTwoPosition implements DrawingObject{
     private Texture buttonImageOn;
     private Texture buttonImageOff;
     private boolean statusOn;
@@ -28,7 +30,17 @@ public class ButtonWithTwoPosition {
         }
     }
 
-    public Texture getButtonImage(){
+    public void setStatus(boolean bool){
+        statusOn = bool;
+    }
+
+    public void dispose() {
+        buttonImageOn.dispose();
+        buttonImageOn.dispose();
+    }
+
+    @Override
+    public Texture getImage() {
         if (statusOn){
             return buttonImageOn;
         }else {
@@ -36,17 +48,24 @@ public class ButtonWithTwoPosition {
         }
     }
 
-    public void setStatus(boolean bool){
-        statusOn = bool;
+    @Override
+    public float getX() {
+        return rectangle.getX();
     }
 
-    public float[] getArrayData(){
-        return new float []{rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight()};
+    @Override
+    public float getY() {
+        return rectangle.getY();
     }
 
-    public void dispose() {
-        buttonImageOn.dispose();
-        buttonImageOn.dispose();
+    @Override
+    public float getWidth() {
+        return rectangle.getWidth();
+    }
+
+    @Override
+    public float getHeight() {
+        return rectangle.getHeight();
     }
 }
 

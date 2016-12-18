@@ -1,4 +1,4 @@
-package com.mygdx.game.pavelzzzzz.realisation;
+package com.mygdx.game.pavelzzzzz.model.items;
 
 import com.badlogic.gdx.utils.TimeUtils;
 
