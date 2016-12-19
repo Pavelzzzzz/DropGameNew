@@ -3,9 +3,14 @@ package com.mygdx.game.pavelzzzzz.model.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.pavelzzzzz.ScreenManager;
+import com.mygdx.game.pavelzzzzz.model.database.ActionForSQLite;
 import com.mygdx.game.pavelzzzzz.model.draw.DrawingString;
 import com.mygdx.game.pavelzzzzz.model.buttons.Button;
 import com.mygdx.game.pavelzzzzz.model.buttons.ButtonWithTwoPosition;
+
+import java.sql.SQLException;
+
+import static com.mygdx.game.pavelzzzzz.model.database.ActionForSQLite.conn;
 
 /**
  * Created by Pavel on 17.12.16.

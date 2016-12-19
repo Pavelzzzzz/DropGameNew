@@ -166,6 +166,9 @@ public class GameScreen implements Screen {
                     }
                 }
                 if (buttonArrow.contains(touchPoint.x, touchPoint.y)){
+                    rainMusic.pause();
+                    playRainMusic = false;
+                    buttonMusic.setStatus(playRainMusic);
                     screenManager.setMainMenuScreen();
                 }
             }

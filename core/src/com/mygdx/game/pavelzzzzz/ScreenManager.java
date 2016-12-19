@@ -90,13 +90,11 @@ public class ScreenManager extends Game {
 
     public void setGameOverScreen(int[] array){
         if (gameOverScreen == null){
-            gameOverScreen = new GameOverScreen(this, array);
+            gameOverScreen = new GameOverScreen(this);
             delScreens.add(gameOverScreen);
-        }else{
-            gameOverScreen.setResults(array);
         }
+        gameOverScreen.update(array);
         this.setScreen(gameOverScreen);
-
     }
 
     public void setHelpScreen(){
@@ -111,6 +109,8 @@ public class ScreenManager extends Game {
         if (resultsScreen == null){
             resultsScreen = new ResultsScreen(this);
             delScreens.add(resultsScreen);
+        }else {
+            resultsScreen.update();
         }
         this.setScreen(resultsScreen);
     }

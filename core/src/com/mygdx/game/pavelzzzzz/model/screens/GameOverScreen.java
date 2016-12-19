@@ -5,7 +5,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.pavelzzzzz.ScreenManager;
 import com.mygdx.game.pavelzzzzz.model.buttons.Button;
+import com.mygdx.game.pavelzzzzz.model.database.ActionForSQLite;
 import com.mygdx.game.pavelzzzzz.model.draw.DrawingString;
+
+import java.sql.SQLException;
 
 /**
  * Created by Pavel on 30.11.16.
@@ -15,7 +18,6 @@ public class GameOverScreen implements Screen {
 
     private ScreenManager screenManager;
 
-    private int resultArray[];
     private Vector3 touchPoint;
 
     private Array<DrawingString> arrayString;
@@ -23,41 +25,35 @@ public class GameOverScreen implements Screen {
     private Button buttonPlay;
     private Button buttonArrow;
 
-    public GameOverScreen(ScreenManager inputScreenManager, int inputResultArray[]){
+    public GameOverScreen(ScreenManager inputScreenManager){
         screenManager = inputScreenManager;
 
-        resultArray = inputResultArray;
         buttonPlay = new Button("button/buttonPlayAgain.png",240, 350, 320, 100);
         buttonArrow = new Button("button/arrow.png", 10, 10, 64, 64);
         touchPoint = new Vector3();
 
-        arrayString = new Array<DrawingString>();
-        arrayString.add(new DrawingString("Collected drops: " + resultArray[0], 100, 300));
-        arrayString.add(new DrawingString("Score: " + resultArray[1], 100, 250));
-        arrayString.add(new DrawingString("Creation time: " + resultArray[2], 100, 200));
-        arrayString.add(new DrawingString("Decline speed: " + resultArray[3], 100, 150));
-
-//        Score score = new Score();
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("      ");
-//        sb.append(Integer.toString(inputResultArray[0]));
-//        sb.append("      ");
-//        sb.append(Integer.toString(inputResultArray[2]));
-//        sb.append("      ");
-//        sb.append(Integer.toString(inputResultArray[3]));
-//        sb.append("\n");
-//        score.setScore(new String[]{Integer.toString(inputResultArray[1]), sb.toString()});
-//        score.writeToFile();
         System.out.print("GameOverScreen created\n");
     }
 
-    public void setResults(int[] array){
-        resultArray = array;
-        arrayString.clear();
-        arrayString.add(new DrawingString("Collected drops: " + resultArray[0], 100, 300));
-        arrayString.add(new DrawingString("Score: " + resultArray[1], 100, 250));
-        arrayString.add(new DrawingString("Creation time: " + resultArray[2], 100, 200));
-        arrayString.add(new DrawingString("Decline speed: " + resultArray[3], 100, 150));
+    public void update(int inputResultArray[]){
+        arrayString = new Array<DrawingString>();
+        arrayString.add(new DrawingString("Collected drops: " + inputResultArray[0], 100, 300));
+        arrayString.add(new DrawingString("Score: " + inputResultArray[1], 100, 250));
+        arrayString.add(new DrawingString("Creation time: " + inputResultArray[2], 100, 200));
+        arrayString.add(new DrawingString("Decline speed: " + inputResultArray[3], 100, 150));
+
+        try{
+            ActionForSQLite.connection();
+            ActionForSQLite.createDB();
+            ActionForSQLite.noteAddDB(inputResultArray[1], inputResultArray[0], inputResultArray[2], inputResultArray[3]);
+            ActionForSQLite.CloseDB();
+        }
+        catch (ClassNotFoundException x){
+            System.out.print("ClassNotFoundException\n");
+        }
+        catch (SQLException x){
+            System.out.print("SQLException\n");
+        }
     }
 
     @Override
